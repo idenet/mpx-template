@@ -3,6 +3,10 @@ var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var mainSubDir = '{% if isPlugin %}miniprogram{% endif %}'
 
+function resolve(dir) {
+  return path.join(__dirname, '..', dir)
+}
+
 function resolveSrc (file) {
   return path.resolve(__dirname, '../src', mainSubDir, file || '')
 }
@@ -20,6 +24,9 @@ module.exports = merge(baseWebpackConfig, {
     path: resolveDist()
   },
   resolve: {
-    modules: [resolveSrc()]
+    modules: [resolveSrc()],
+    alias: {
+      "@": resolve('src')
+    }
   }
 })
